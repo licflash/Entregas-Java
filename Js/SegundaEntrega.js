@@ -52,11 +52,71 @@ function mostrarJuegos(juegos) {
     alert(mensaje);
 }
 
+//Elegir juego
+
+function seleccionjuego(videojuego) {
+    switch (videojuego) {
+        case 0:
+            nombrenuevoj = prompt("Ingrese el nombre del nuevo juego");
+            precionuevoj = parseFloat(prompt("Ingrese el precio del nuevo juego"));
+            val = 0;
+            while (val === 0) {
+                monedanuevoj = prompt("Ingrese el nombre de la moneda del nuevo juego").toLowerCase();
+                switch (monedanuevoj) {
+                    case "peso":
+                        monedanuevoj = monedas[0];
+                        val = 1;
+                        break;
+                    case "dolar":
+                        monedanuevoj = monedas[1];
+                        val = 1;
+                        break;
+                    case "euro":
+                        monedanuevoj = monedas[2];
+                        val = 1;
+                        break;
+                    case "libra":
+                        monedanuevoj = monedas[3];
+                        val = 1;
+                        break;
+                    case "yen":
+                        monedanuevoj = monedas[4];
+                        val = 1;
+                        break;
+                    default:
+                        val = 0;
+                        break;
+                }
+            }
+
+            nj = juegos.length + 1;
+            const nuevojuego = new juego(nj, nombrenuevoj, monedanuevoj, precionuevoj);
+            juegos.push(nuevojuego);
+            break;
+        case 1:
+            j = 1;
+            break;
+        case 2:
+            j = 2;
+            break;
+        case 3:
+            j = 3;
+            break;
+        case 4:
+            j = 4;
+            break;
+        case 5:
+            j = 5;
+            break;
+        case -1:
+            break;
+    }
+}
 
 //Calculo del juego
 
 function impuesto() {
-    const cuenta = (impuestopais * juegos[j]) / 100;
+    const cuenta = (impuestopais * juegos[j].precio_juego) / 100;
     return cuenta;
 }
 
@@ -65,91 +125,27 @@ function impuesto() {
 // PROGRAMA COMPLETO
 
 
-mostrarJuegos(juegos); //Muestro los juegos
-videojuego = prompt("Seleccione el juego que desea cotizar. Si desea ingresar un nuevo juego ingrese 0. Si desea salir, ingrese -1")
-//Seleccionar un juego
-while (videojuego != -1) {
-    switch (videojuego) {
-        case 0:
-            nombrenuevoj = prompt("Ingrese el nombre del nuevo juego"),
-                precionuevoj = parseFloat(prompt("Ingrese el precio del nuevo juego")),
-                val = 0
-            while (val == 0) {
-                monedanuevoj = prompt("Ingrese el nombre de la moneda del nuevo juego")
-                switch (monedanuevoj.toLowerCase()) {
-                    case "peso":
-                        monedanuevoj = monedas[0]
-                        val = 1
-                            ;
-                    case "dolar":
-                        monedanuevoj = monedas[1]
-                        val = 1
-                            ;
-                    case "euro":
-                        monedanuevoj = monedas[2]
-                        val = 1
-                            ;
-                    case "libra":
-                        monedanuevoj = monedas[3]
-                        val = 1
-                            ;
-                    case "yen":
-                        monedanuevoj = monedas[4]
-                        val = 1
-                            ;
-                    case "":
-                        val = 0
-                            ;
-                }
-            }
-            
-            nj = juegos.length + 1
-            const nuevojuego = {
-                id_juego: nj,
-                nombre_juego: nombrenuevoj,
-                moneda_juego: monedanuevoj,
-                precio_juego: precionuevoj
-                }
-            juegos.push(nuevojuego)
-            break;
-        case 1:
-            j = 1
-            break;
-        case 2:
-            j = 2
-            break;
-        case 3:
-            j = 3
-            break;
-        case 4:
-            j = 4
-            break;
-        case 5:
-            j = 5
-            break;
-        case -1:
-            break;
+mostrarJuegos(juegos); // Muestro los juegos
+
+let videojuego = parseInt(prompt("Seleccione el juego que desea cotizar. Si desea ingresar un nuevo juego ingrese 0. Si desea salir, ingrese -1"));
+
+let impuestopais;
+do {
+    impuestopais = parseInt(prompt("Ingrese el número de porcentaje de impuestos de su país. Solo el número, sin signos, ni letras"));
+    if (isNaN(impuestopais)) {
+        alert("Ingrese un número válido.");
+    }
+} while (isNaN(impuestopais));
+
+// Cálculo final
+let costofinal = 0;
+if (juegos[videojuego]) {
+    if (juegos[videojuego].moneda_juego !== monedas[1]) {
+        costofinal = juegos[videojuego].precio_juego + impuesto();
+    } else {
+        costofinal = juegos[videojuego].precio_juego;
     }
 }
 
-impuestopais = parseInt(prompt("Ingrese el número de porcentaje de impuestos de su país. Solo el número, sin signos, ni letras"))
-while (impuestopais === 0) {
-        if (isNaN(impuestopais)) {
-            alert("Ingrese un número")
-            impuestopais = 0
-        }
-        else {
-            impuestopais = parseInt(prompt("Ingrese el número de porcentaje de impuestos de su país. Solo el número, sin signos, ni letras"));
-        }
-    }
-
-//Calculo final
-costofinal = 0
-if (juegos[j].moneda_juego != modedas[1]){
-    costofinal = impuesto
-}
-else costofinal = juegos[j].precio_juego
-
-//Muestra del precio
-
-alert("El costo total es de: \n" + "$" + costofinal)
+// Muestra del precio
+alert("El costo total es de: $" + costofinal);
