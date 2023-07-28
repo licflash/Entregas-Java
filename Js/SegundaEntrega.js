@@ -4,11 +4,6 @@ class moneda {
         this.nombre = nombre;
         this.valor = valor;
     }
-
-    calcularvalor(peso) {
-        return this.valor * peso
-    }
-
 } // Creo la clase monedas
 
 const monedas = [] //Array de monedas
