@@ -124,7 +124,6 @@ function impuesto() {
 
 // PROGRAMA COMPLETO
 
-
 mostrarJuegos(juegos); // Muestro los juegos
 
 let videojuego = parseInt(prompt("Seleccione el juego que desea cotizar. Si desea ingresar un nuevo juego ingrese 0. Si desea salir, ingrese -1"));
